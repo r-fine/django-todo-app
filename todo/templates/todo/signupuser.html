@@ -1,0 +1,52 @@
+{% extends 'todo/base.html' %}
+
+
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+            <h2>Sign Up</h2>
+            <p>Please fill in this form to create an account!</p>
+            <hr>
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+            {% endif %}
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" class="form-control" id="username" aria-describedby="usernameHelp">
+                <small id="usernameHelp" class="form-text text-muted">Your username must be unique. We'll let you know
+                    if someone has taken it already.</small>
+            </div>
+            <div class="form-group">
+                <label for="password1">Password</label>
+                <input type="password" name="password1" class="form-control" id="password1">
+            </div>
+            <div class="form-group">
+                <label for="password2">Confirm Password</label>
+                <input type="password" name="password2" class="form-control" id="password2">
+            </div>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+            <hr>
+            <div class="text-left">
+                Already have an account? <a href="{% url 'loginuser' %}">Login here</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- <h1>Sign up</h1>
+
+<h2>{{ error }}</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Sign Up</button>
+</form> -->
+{% endblock content %}
+
+the service administrators will not be able to recover data in case you forget your username and/or password. Please
+save them in a safe place.

@@ -1,0 +1,43 @@
+{% extends 'todo/base.html' %}
+
+
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+            <h2>Login to To-Do App</h2>
+            <p>Enter Username and Password</p>
+            <hr>
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+            {% endif %}
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" class="form-control" id="username" aria-describedby="usernameHelp">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" class="form-control" id="password">
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+            <hr>
+            <div class="text-left">
+                Don't have an account? <a href="{% url 'signupuser' %}">Sign up here</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- <h1>Login</h1>
+
+<h2>{{ error }}</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary" type="submit">Login</button>
+</form> -->
+{% endblock content %}
