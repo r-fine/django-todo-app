@@ -29,12 +29,12 @@ urlpatterns = [
 
     # Auth
     path('signup/', signupuser, name='signupuser'),
-    path('', loginuser, name='loginuser'),
+    path('login/', loginuser, name='loginuser'),
     path('logout/', logoutuser, name='logoutuser'),
 
     # Todos
     path('home/', home, name='home'),
-    path('current/', currenttodos, name='currenttodos'),
+    path('', currenttodos, name='currenttodos'),
     path('completed/', completedtodos, name='completedtodos'),
     path('create/', createtodo, name='createtodo'),
     path('todo/<int:pk>', viewtodo, name='viewtodo'),
