@@ -29,7 +29,9 @@
             <br>
             <div class="form-group">
                 <label for="password2">Confirm Password</label>
-                <input type="password" name="password2" class="form-control" id="password2">
+                <input type="password" name="password2" class="form-control" id="password2" aria-describedby="passwordHelp">
+                <small id="passwordHelp" class="form-text text-muted">Passwords cannot be recovered. Please save them in a safe place.</small>
+                
             </div>
             <br>
             <button type="submit" class="btn btn-primary">Sign Up</button>
@@ -51,5 +53,4 @@
 </form> -->
 {% endblock content %}
 
-the service administrators will not be able to recover data in case you forget your username and/or password. Please
-save them in a safe place.
+<!-- the service administrators will not be able to recover data in case you forget your username and/or password. -->
