@@ -1,2 +1,2 @@
 # to change language of repo from HTML to Python
-*.html linguist-detectable=false
+*.html linguist-language=Python
