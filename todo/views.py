@@ -26,9 +26,11 @@ def signupuser(request):
 
                 return redirect('currenttodos')
             except IntegrityError:
-                return render(request, 'todo/signupuser.html', {'form': UserCreateForm(), 'error': 'This username has already been taken. Please choose a new username'})
+                error = {'This username has already been taken. Please choose a new username'}
+                return render(request, 'todo/signupuser.html', {'form': UserCreateForm(), 'error':error})
         else:
-            return render(request, 'todo/signupuser.html', {'form': UserCreateForm(), 'error': 'The passwords did not match'})
+            error = {'The passwords did not match'}
+            return render(request, 'todo/signupuser.html', {'form': UserCreateForm(), 'error':error})
 
 def loginuser(request):
     if request.method == 'GET':
@@ -36,7 +38,8 @@ def loginuser(request):
     else:
         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
-            return render(request, 'todo/loginuser.html', {'form':AuthenticationForm(), 'error':'Username and Password did not match'})
+            error = {'Username and Password did not match'}
+            return render(request, 'todo/loginuser.html', {'form':AuthenticationForm(), 'error':error})
             
         else:
             login(request, user)
@@ -56,16 +59,28 @@ def createtodo(request):
     if request.method == 'GET':
         return render(request, 'todo/createtodo.html', {'form':TodoForm()})
     else:
-        try:
-            # form = TodoFrom(request.POST or None)
-            form = TodoForm(request.POST)
-            new_todo = form.save(commit=False)
-            new_todo.user = request.user
-            new_todo.save()
-        except ValueError:
-            return render(request, 'todo/createtodo.html', {'form':TodoForm(), 'error':'Bad data passed in. Try again.'})
+        
+        # form = TodoFrom(request.POST or None)
+        form = TodoForm(request.POST)
+        new_todo = form.save(commit=False)
+        new_todo.user = request.user
+        new_todo.save()
 
         return redirect('currenttodos')
+# def createtodo(request):
+#     if request.method == 'GET':
+#         return render(request, 'todo/createtodo.html', {'form':TodoForm()})
+#     else:
+#         try:
+#             # form = TodoFrom(request.POST or None)
+#             form = TodoForm(request.POST)
+#             new_todo = form.save(commit=False)
+#             new_todo.user = request.user
+#             new_todo.save()
+#         except ValueError:
+#             return render(request, 'todo/createtodo.html', {'form':TodoForm(), 'error':'Bad data passed in. Try again.'})
+
+#         return redirect('currenttodos')
 
 @login_required
 def currenttodos(request):
@@ -86,7 +101,8 @@ def viewtodo(request, pk):
             # return redirect('viewtodo', pk=pk) # Stays on the same page
             return redirect('currenttodos')
         except ValueError:
-            return render(request, 'todo/viewtodo.html', {'form':TodoForm(), 'error':'Bad data passed in. Try again.'})
+            error = {'Bad data passed in. Try again.'}
+            return render(request, 'todo/viewtodo.html', {'form':TodoForm(), 'error':error})
 
 @login_required
 def completetodo(request, pk):
@@ -107,6 +123,7 @@ def deletetodo(request, pk):
 def completedtodos(request):
     todos = Todo.objects.filter(user=request.user, datecompleted__isnull=False).order_by('-datecompleted')
     if todos.count() == 0:
-        return render(request, 'todo/completedtodos.html', {'prompt':"No todo is completed!"})
+        prompt = {"No todo is completed!"}
+        return render(request, 'todo/completedtodos.html', {'prompt':prompt})
 
     return render(request, 'todo/completedtodos.html', {'todos':todos})
